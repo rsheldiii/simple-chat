@@ -77,7 +77,7 @@ A (very) simple, real-time chat application built with Ruby on Rails, ActionCabl
    docker compose up --build
    ```
 
-    The docker compose is intentionally run in production mode; SSL has been disabled for testing purposes.
+    The container is intentionally run in production mode; SSL has been disabled for testing purposes.
 
 4. **Access the application:**
    - Open your browser to [http://localhost:3000](http://localhost:3000)
