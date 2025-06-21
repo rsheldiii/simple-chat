@@ -144,7 +144,7 @@ The problem then becomes synchronizing service state between nodes.
 
 synchronizing the web app is accomplished via deploy process. Spinning up a new node pool and waiting for health checks before swapping allows for immediate and synchronized version control. 
 
-Alternatively, with load balancing of websocket connections at a known web address, assets could be served via a CDN instead.
+Alternatively, assets could be served via a CDN instead. Socket connections would need to be made to a known address.
 
 #### Consumer websocket
 
