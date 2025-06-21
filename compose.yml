@@ -1,0 +1,22 @@
+services:
+  websocket_server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      secrets:
+        - RAILS_MASTER_KEY
+    ports:
+      - "3000:3000"
+    environment:
+      - RAILS_MASTER_KEY
+      - REDIS_URL=redis://redis:6379/1
+      # - RAILS_ENV=development
+    secrets:
+      - RAILS_MASTER_KEY
+    depends_on:
+      - redis
+  redis:
+    image: redis:latest
+secrets:
+  RAILS_MASTER_KEY:
+    environment: RAILS_MASTER_KEY
