@@ -17,7 +17,7 @@ WORKDIR /rails
 
 # Install base packages
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl libjemalloc2 libvips sqlite3 npm && \
+    apt-get install --no-install-recommends -y curl libjemalloc2 libvips libpq-dev postgresql-client npm && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Set production environment
@@ -51,9 +51,11 @@ RUN bundle exec bootsnap precompile app/ lib/
 
 # Precompiling assets for production
 # RUN RAILS_MASTER_KEY=$(cat /run/secrets/RAILS_MASTER_KEY) ./bin/rails assets:precompile
-RUN --mount=type=secret,id=RAILS_MASTER_KEY \
-    export RAILS_MASTER_KEY="$(cat /run/secrets/RAILS_MASTER_KEY)" && \
-    bundle exec rake assets:precompile
+# RUN --mount=type=secret,id=RAILS_MASTER_KEY \
+#     export RAILS_MASTER_KEY="$(cat /run/secrets/RAILS_MASTER_KEY)" && \
+#     bundle exec rake assets:precompile
+
+RUN SECRET_KEY_BASE_DUMMY=1 bundle exec rake assets:precompile
 
 # Final stage for app image
 FROM base

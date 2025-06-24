@@ -1,4 +1,11 @@
-#!/bin/bash -e
+#!/usr/bin/env bash
+
+# Get the EC2 IP address
+TOKEN=$(curl -fsS -X PUT http://169.254.169.254/latest/api/token \
+           -H "X-aws-ec2-metadata-token-ttl-seconds:21600")
+EC2_IP=$(curl -fsS -H "X-aws-ec2-metadata-token: $TOKEN" \
+               http://169.254.169.254/latest/meta-data/public-ipv4)
+export EC2_IP
 
 # Enable jemalloc for reduced memory usage and latency.
 if [ -z "${LD_PRELOAD+x}" ]; then
