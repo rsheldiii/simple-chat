@@ -84,7 +84,7 @@ Rails.application.configure do
     /.*\.elb\.amazonaws\.com/, # Allow requests from ALB
     "127.0.0.1",
     "localhost",
-    ENV["EC2_IP"],
+    ENV["EC2_IP"]
   ]
 
   # Skip DNS rebinding protection for the default health check endpoint.
