@@ -7,7 +7,7 @@ A (very) simple, real-time chat application built with Ruby on Rails, ActionCabl
 - **Backend**: RoR with ActionCable for real-time WebSocket communication
 - **Frontend**: React / TypeScript / styled-components / Vite (vite-rails)
 - **Authentication**: Devise / OmniAuth
-- **Database**: SQLite 
+- **Database**: Postgres 
 - **Deployment**: Docker Compose with multi-stage builds
 
 ## ✨ Features
@@ -111,6 +111,31 @@ If you prefer to run locally without Docker:
    ```
 
    This starts both the Rails server and Vite dev server via the Procfile. If running in production, you may need to tweak your REDIS_URL.
+
+### Amazon ECS Deployment
+
+Simple-chat supports provisional deployment via ECS.
+
+#### Prerequisites
+
+- AWS CLI and `aws configure`
+- ECS CLI and `ecs-cli configure`
+- An ECS cluster with at least one t2.small
+
+#### Considerations
+
+1. The docker compose file for ECS (compose.prod.yml) is currently wired up to my docker image. if you wish to modify simple-chat, you should update the reference to your own image.
+2. For production use, consider restricting the allowed hosts in `config/environments/production.rb` to your specific domain instead of the current list
+
+#### Deploy
+
+   ```bash
+   # Export your Rails master key
+   export RAILS_MASTER_KEY=$(cat ./config/master.key)
+   
+   # Deploy using the production compose file
+   ecs-cli compose --file compose.prod.yml up --cluster-config your-config-name --ecs-profile your-profile-name
+   ```
 
 ## Next steps:
 

@@ -1,0 +1,28 @@
+version: "2"    # note: ECS CLI only supports v2 syntax
+services:
+  websocket_server:
+    mem_limit: 512m
+    image: rsheldiii/simple-chat:linux-amd64
+    ports:
+      - "80:3000"
+      - "443:3000"
+    environment:
+      - RAILS_MASTER_KEY=${RAILS_MASTER_KEY}
+      - REDIS_URL=redis://redis:6379/1
+      - POSTGRES_HOST=postgres
+      - PORT=80
+    links:
+      - postgres
+      - redis
+
+  redis:
+    mem_limit: 256m
+    image: redis:7
+    ports:
+      - "6379:6379"
+
+  postgres:
+    mem_limit: 256m
+    image: postgres:15
+    ports:
+      - "5432:5432"

@@ -138,7 +138,13 @@ const App = () => {
   const username = useFetchUsername();
   const chats = useFetchChats(lastChatTimestamp);
   const [messages, setMessages] = useState([]);
-  const cable = useRef(ActionCable.createConsumer("ws://localhost:3000/cable"));
+
+  const { host, protocol } = window.location;
+  const wsProtocol = protocol.replace("http", "ws");
+  const cable = useRef(
+    ActionCable.createConsumer(`${wsProtocol}//${host}/cable`)
+  );
+
   const chat = useRef(
     cable.current.subscriptions.create(
       { channel: "ChatChannel" },

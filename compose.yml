@@ -10,13 +10,24 @@ services:
     environment:
       - RAILS_MASTER_KEY
       - REDIS_URL=redis://redis:6379/1
+      - POSTGRES_HOST=postgres
       # - RAILS_ENV=development
     secrets:
       - RAILS_MASTER_KEY
     depends_on:
       - redis
+      - postgres
   redis:
     image: redis:latest
+  postgres:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
 secrets:
   RAILS_MASTER_KEY:
     environment: RAILS_MASTER_KEY
+volumes:
+  postgres_data:
