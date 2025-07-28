@@ -4,7 +4,7 @@ source "https://rubygems.org"
 gem "rails", "~> 8.0.2"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem "propshaft"
-gem "pg", "~> 1.5"
+gem "pg", "~> 1.6"
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
